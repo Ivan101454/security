@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
 
-    private static final List<UserDto> list = InitData.init();
+    private static List<UserDto> list = InitData.init();
 
     public List<UserDto> findAll() {
         return list;
@@ -23,14 +23,23 @@ public class UserService {
     }
 
     public UserDto create(UserDto userDto) {
-        return null;
+        list.add(userDto);
+        return userDto;
     }
 
-    public String update(Long id, UserDto userDto) {
-        return null;
+    public void update(Long id, UserDto userDto) {
+        list.stream().filter(u -> u.getUserId().equals(id)).map(u -> {
+            u.setAge(userDto.getAge());
+            u.setUsername(userDto.getUsername());
+            u.setPassword(userDto.getPassword());
+            u.setLastName(userDto.getLastName());
+            u.setFirstName(userDto.getFirstName());
+            return u;
+        });
     }
 
     public void delete(Long id) {
-
+        UserDto first = list.stream().filter(u -> u.getUserId().equals(id)).toList().getFirst();
+        list.remove(first.getUserId());
     }
 }
