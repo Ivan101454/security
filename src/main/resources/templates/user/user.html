@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>user</title>
+</head>
+<body>
+<div th:text="${user.firstName}"></div>
+<form th:action="@{/update/{userId}(userId=${user.userId})}" method="post" th:object="${user}">
+    <label for="username">Username:
+        <input type="text" name="username" th:value="${username}" id="username">
+    </label><br>
+    <label for="password">Password:
+        <input type="text" name="password" th:value="${password}" id="password">
+    </label><br>
+    <label for="firstname">Firstname:
+        <input type="text" name="firstname" th:value="${firstname}" id="firstname">
+    </label><br>
+    <label for="lastname">Lastname:
+        <input type="text" name="lastname" th:value="${lastname}" id="lastname">
+    </label><br>
+    <label for="age">Age:
+        <input type="number" name="age" th:value="${age}" id="age">
+    </label><br>
+    <button>Update</button><br>
+</form>
+    <a href="/users">На Главную</a>
+</body>
+</html>
