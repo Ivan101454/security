@@ -22,6 +22,13 @@
     <label for="age">Age:
         <input type="number" name="age" th:value="${age}" id="age">
     </label><br>
+    <label for="role">Role
+        <select id="role" name="role">
+            <option th:each="role : ${roles}" th:text="${role}" th:value="${role}">Role
+
+            </option>
+        </select><br>
+    </label>
     <button>Update</button><br>
 </form>
     <a href="/users">На Главную</a>

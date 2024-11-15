@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.clevertec.security.dto.UserDto;
+import ru.clevertec.security.enums.Role;
 import ru.clevertec.security.service.UserService;
 import ru.clevertec.security.util.InitData;
 
@@ -30,10 +31,12 @@ public class UserController {
     @GetMapping("user/{id}")
     public String findBYId(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userService.findById(id));
+        model.addAttribute("roles", Role.values());
         return "user/user";
     }
     @GetMapping("/create")
-    public String create() {
+    public String create(Model model) {
+        model.addAttribute("roles", Role.values());
         return "user/registration";
     }
 
@@ -48,7 +51,7 @@ public class UserController {
     public String enter() {
         return "user/enter";
     }
-    @PostMapping ("/enter")
+    @PostMapping("/enter")
     public String enter(@RequestParam String username, @RequestParam String password) {
         if(!userService.findAll().stream().filter(u -> u.getUsername().equals(username) &&
                 u.getPassword().equals(password)).toList().isEmpty()) {
@@ -62,7 +65,7 @@ public class UserController {
         userService.update(id, userDto);
         return "redirect:/users/{id}";
     }
-    @GetMapping ("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id) {
         userService.delete(id);
         return "redirect:/users";
