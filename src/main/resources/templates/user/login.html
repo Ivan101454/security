@@ -6,7 +6,13 @@
 </head>
 <body>
     <p>Залогинтесь или зарегестрируйтесь</p>
-    <form th:action="@{/enter}" method="post" th:object="${user}">
+    <form th:action="@{/login}" method="post" th:object="${user}">
+        <div style="color: red" th:if="${param.error}">
+            Bad credentials
+        </div>
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
         <label for="username">Username:
             <input type="text" name="username" th:value="${username}" id="username">
         </label><br>
