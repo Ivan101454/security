@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.clevertec.security.dto.UserDto;
 import ru.clevertec.security.util.InitData;
@@ -16,7 +17,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
-    private static final List<UserDto> list = InitData.init();
+    private final PasswordEncoder passwordEncoder;
+
+    private static List<UserDto> list = InitData.init();
 
     public List<UserDto> findAll() {
         return list;
@@ -40,8 +43,15 @@ public class UserService implements UserDetailsService {
     }
 
     public void delete(Long id) {
-        UserDto first = list.stream().filter(u -> u.getUserId().equals(id)).toList().getFirst();
-        list.remove(first.getUserId());
+        int position = -1;
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getUserId().equals(id)) {
+                position = i;
+            }
+        }
+        if(position != -1) {
+            list.remove(position);
+        }
     }
 
     @Override
@@ -51,7 +61,7 @@ public class UserService implements UserDetailsService {
 //                        u.getPassword(),
 //                        Collections.singleton(u.getRole()))).toList().getFirst();
         User.withUsername(u.getUsername())
-                .password("{noop}" + u.getPassword())
+                .password(passwordEncoder.encode(u.getPassword()))
                 .roles(String.valueOf(Collections.singleton(u.getRole())))).toList().getFirst()
                 .build();
     }

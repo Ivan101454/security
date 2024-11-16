@@ -6,18 +6,18 @@
 </head>
 <body>
     <p>Создайте нового пользователя</p>
-    <form th:action="@{/registration}" method="post" th:object="${user}">
+    <form th:action="@{/create}" method="post" th:object="${user}">
         <label for="username">Username:
             <input type="text" name="username" th:value="${username}" id="username">
         </label><br>
         <label for="password">Password:
-            <input type="text" name="password" th:value="${password}" id="password">
+            <input type="password" name="password" id="password">
         </label><br>
         <label for="firstname">Firstname:
-            <input type="text" name="firstname" th:value="${firstname}" id="firstname">
+            <input type="text" name="firstName" th:value="${firstname}" id="firstname">
         </label><br>
         <label for="lastname">Lastname:
-            <input type="text" name="lastname" th:value="${lastname}" id="lastname">
+            <input type="text" name="lastName" th:value="${lastname}" id="lastname">
         </label><br>
         <label for="age">Age:
             <input type="number" name="age" th:value="${age}" id="age">

@@ -1,5 +1,6 @@
 package ru.clevertec.security.util;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.clevertec.security.dto.UserDto;
 import ru.clevertec.security.enums.Role;
 

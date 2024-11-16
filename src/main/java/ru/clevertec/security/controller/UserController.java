@@ -8,10 +8,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import ru.clevertec.security.dto.UserDto;
 import ru.clevertec.security.enums.Role;
 import ru.clevertec.security.service.UserService;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
@@ -39,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute UserDto userDto) {
+    public String create(Model model, @ModelAttribute UserDto userDto) {
         Long userId = userService.findAll().getLast().getUserId();
         userDto.setUserId(++userId);
         userService.create(userDto);
@@ -61,11 +62,12 @@ public class UserController {
     @PostMapping("/update/{id}")
     public String update(@PathVariable("id") Long id, @ModelAttribute UserDto userDto) {
         userService.update(id, userDto);
-        return "redirect:/users/{id}";
+        return "redirect:/users";
     }
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id) {
         userService.delete(id);
         return "redirect:/users";
     }
+
 }
