@@ -61,8 +61,8 @@ public class UserService implements UserDetailsService {
 //                        u.getPassword(),
 //                        Collections.singleton(u.getRole()))).toList().getFirst();
         User.withUsername(u.getUsername())
-                .password(passwordEncoder.encode(u.getPassword()))
-                .roles(String.valueOf(Collections.singleton(u.getRole())))).toList().getFirst()
-                .build();
+                .password(passwordEncoder.encode(u.getPassword())).authorities(Collections.singleton(u.getRole()))
+                .build()).toList().getFirst();
+//                .roles(String.valueOf(Collections.singleton(u.getRole())))).toList().getFirst()
     }
 }

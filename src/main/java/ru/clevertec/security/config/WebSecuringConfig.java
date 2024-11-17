@@ -9,6 +9,9 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import ru.clevertec.security.enums.Role;
+
+import static ru.clevertec.security.enums.Role.ADMIN;
 
 @Configuration
 @EnableWebSecurity
@@ -17,7 +20,8 @@ public class WebSecuringConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-//                        .requestMatchers( "/", "registration").permitAll()
+                        .requestMatchers("/create").permitAll()
+                                .requestMatchers("/update/**", "/delete/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
 //                .httpBasic(Customizer.withDefaults())
